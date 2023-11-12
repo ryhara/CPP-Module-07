@@ -16,4 +16,13 @@
 #define UNDERLINE		"\033[4m"
 #define BOLD_UNDERLINE	"\033[1;4m"
 
+template <typename T>
+void	iter(T *array, size_t length, void (*f)(T const &))
+{
+	if (length <= 0 || !array || !f)
+		return ;
+	for (size_t i = 0; i < length; i++)
+		f(array[i]);
+}
+
 #endif
