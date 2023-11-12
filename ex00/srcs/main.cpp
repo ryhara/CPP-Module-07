@@ -42,6 +42,16 @@ int main(void)
 		std::cout << "c = " << c << ", d = " << d << std::endl;
 		std::cout << "min( c, d ) = " << ::min( c, d ) << std::endl;
 		std::cout << "max( c, d ) = " << ::max( c, d ) << std::endl;
+
+		int e[] = {1, 2, 3, 4, 5};
+		int f[] = {10, 20, 30, 40, 50};
+		std::cout << "e[0] = " << e[0] << ", f[0] = " << f[0] << std::endl;
+		::swap(e[0], f[0]);
+		std::cout << "e[0] = " << e[0] << ", f[0] = " << f[0] << std::endl;
+		std::cout << "e = " << e << ", f = " << f << std::endl;
+		std::cout << "min( e, f ) = " << ::min( e, f ) << std::endl;
+		std::cout << "max( e, f ) = " << ::max( e, f ) << std::endl;
+
 		std::cout << "--------------------" << std::endl << std::endl;
 	}
 return 0;
