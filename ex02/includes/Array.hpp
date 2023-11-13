@@ -59,19 +59,25 @@ Array<T>::Array(const Array& copy)
 template <typename T>
 Array<T>::~Array()
 {
-	if (_array)
-		delete [] _array;
+	delete [] _array;
 }
 
 template <typename T>
 Array<T>& Array<T>::operator=(const Array& obj)
 {
-	if (this == &obj)
-		return *this;
-	this->_size = obj._size;
-	this->_array = new T[_size];
-	for (int i = 0; i < _size; i++)
-		this->_array[i] = obj._array[i];
+	if (this != &obj)
+	{
+		delete [] _array;
+		this->_size = obj._size;
+		try {
+			this->_array = new T[_size];
+		} catch (std::bad_alloc& e) {
+			std::cerr << e.what() << std::endl;
+			std::exit(1);
+		}
+		for (int i = 0; i < _size; i++)
+			_this->array[i] = obj._array[i];
+	}
 	return (*this);
 }
 
