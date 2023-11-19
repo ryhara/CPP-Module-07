@@ -122,7 +122,7 @@ int main(int, char**)
     for (int i = 0; i < 5; i++)
         std::cout << arr2[i] << " ";
     std::cout << std::endl;
-    // cannot compile because arr2 is const
+    // // cannot compile because arr2 is const
     // arr2[0] = 42;
     std::cout << "--------------" << std::endl << std::endl;
     return 0;

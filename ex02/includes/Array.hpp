@@ -22,91 +22,41 @@ template <typename T>
 class Array
 {
 	private:
-		T*		_array;
-		int		_size;
+		T*					_array;
+		unsigned int		_size;
 	public:
-		Array();
-		Array(unsigned int n);
-		Array(const Array& copy);
-		~Array();
-		Array& operator=(const Array& obj);
-		T& operator[](int index);
-		const T& operator[](int index) const;
-		int size() const;
-		class OutOfRangeException : public std::exception
-		{
-			public:
-				virtual const char* what() const throw();
-		};
-};
-
-template <typename T>
-Array<T>::Array() : _array(NULL), _size(0)
-{
-}
-
-template <typename T>
-Array<T>::Array(unsigned int n) : _array(new T[n]()), _size(n)
-{
-}
-
-template <typename T>
-Array<T>::Array(const Array& copy)
-{
-	*this = copy;
-}
-
-template <typename T>
-Array<T>::~Array()
-{
-	delete [] _array;
-}
-
-template <typename T>
-Array<T>& Array<T>::operator=(const Array& obj)
-{
-	if (this != &obj)
-	{
-		delete [] _array;
-		this->_size = obj._size;
-		try {
-			this->_array = new T[_size];
-		} catch (std::bad_alloc& e) {
-			std::cerr << e.what() << std::endl;
-			std::exit(1);
+		Array(): _array(NULL), _size(0) {};
+		Array(unsigned int n) : _array(new T[n]()), _size(n) {};
+		Array(const Array& copy) : _array(NULL), _size(0) { *this = copy; };
+		~Array(){ delete [] _array; };
+		Array& operator=(const Array& obj) {
+			if (this != &obj)
+			{
+				delete [] _array;
+				this->_size = obj._size;
+				try {
+					this->_array = new T[_size];
+				} catch (std::bad_alloc& e) {
+					std::cerr << e.what() << std::endl;
+					std::exit(1);
+				}
+				for (unsigned int i = 0; i < _size; i++)
+					this->_array[i] = obj._array[i];
+			}
+			return (*this);
 		}
-		for (int i = 0; i < _size; i++)
-			_this->array[i] = obj._array[i];
-	}
-	return (*this);
-}
+		T& operator[](unsigned int index) {
+			if (index >= _size)
+				throw std::out_of_range(RED"Error: Out of range"END);
+			return (this->_array[index]);
+		};
+		const T& operator[](unsigned int index) const {
+			if (index >= _size)
+				throw std::out_of_range(RED"Error: Out of range"END);
+			return (this->_array[index]);
+		};
+		int size() const { return (this->_size); };
 
-template <typename T>
-T& Array<T>::operator[](int index)
-{
-	if (index < 0 || index >= _size)
-		throw OutOfRangeException();
-	return (this->_array[index]);
-}
-
-template <typename T>
-const T& Array<T>::operator[](int index) const
-{
-	if (index < 0 || index >= _size)
-		throw OutOfRangeException();
-	return (this->_array[index]);
-}
-
-template <typename T>
-int Array<T>::size() const
-{
-	return (this->_size);
-}
-
-template <typename T>
-const char* Array<T>::OutOfRangeException::what() const throw()
-{
-	return (RED"Error: Out of range"END);
-}
+};
 
 #endif
