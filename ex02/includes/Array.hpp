@@ -55,7 +55,7 @@ class Array
 				throw std::out_of_range(RED"Error: Out of range"END);
 			return (this->_array[index]);
 		};
-		int size() const { return (this->_size); };
+		unsigned int size() const { return (this->_size); };
 
 };
 
